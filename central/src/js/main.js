@@ -19,7 +19,7 @@ axios.get('http://localhost:3000/diagram')
         console.log(response);
         nomnoml.draw(canvas, response.data);
     })
-let source = '[nomnoml] is -> [bad D]';
+let source = '[nomnoml] is -> [Not connected to server yet.]';
 nomnoml.draw(canvas, source);
 
 const interval = setInterval(() => {
