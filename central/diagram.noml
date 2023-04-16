@@ -1,0 +1,9 @@
+#.green: fill=#25c023 stroke=white fontSize=40 direction=down
+#.red: fill=#FF4E30 stroke=white title=bold direction=down
+
+[<red> Controller|Waiting for Launch Codes]
+
+[<red>Team 1|Launch Codes Not Submitted] -> [Controller]
+[<red>Team 2|Launch Codes Not Submitted] -> [Controller]
+[<green>Team 3|Launch Codes Not Submitted] -> [Controller]
+[<green>Team 4|Launch Codes Not Submitted] -> [Controller]

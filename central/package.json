@@ -1,0 +1,39 @@
+{
+  "name": "arduino-rocket-launcher-central",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "client": "webpack serve --open",
+    "server": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.23.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "johnny-five": "^2.1.0",
+    "livereload": "^0.9.3",
+    "node-gyp": "^8.3.0",
+    "nomnoml": "^1.4.0"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^5.4.0",
+    "nodemon": "^2.0.14",
+    "webpack": "^5.59.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-middleware": "^5.2.1",
+    "webpack-dev-server": "^4.3.1"
+  },
+  "engines": {
+    "node": ">=16.2.0"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "src/*"
+    ]
+  }
+}
