@@ -20,14 +20,18 @@ initialize.addEventListener('click', (e) => {
         })
 })
 
+/*
+Max of 4 teams
+Pins 2-5 available for selection
+ */
 const teams = [
     {
         pin: 2,
-        name: 'Robots'
+        name: 'Cholito',
     },
     {
         pin: 3,
-        name: 'Dookie'
+        name: 'Chupacabra',
     }
 ];
 
@@ -52,7 +56,7 @@ const interval = setInterval(() => {
                     return reading.id === team.pin;
                 })[0];
                 console.log(readings);
-                diagram += `[<${status.reading ? 'green' : 'red'}> Team: ${team.name} (Pin ${team.pin})|` +
+                diagram += `[<${status.reading ? 'green' : 'red'}> Cabinet Member Code Name: ${team.name} (Pin ${team.pin})|` +
                     `${status.reading ? 'Launch is a GO!!!' : 'Not Authorized'}|status:${status.reading}] -> [Controller]\n`;
 
                 readyCount += status.reading;

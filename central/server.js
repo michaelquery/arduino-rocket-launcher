@@ -7,9 +7,12 @@ const express = require('express');
 const cors = require('cors');
 
 // Johnny Five
-let board;
-let launcher;
-let pins = [];
+let BOARD;
+let BOARD_INITIALIZED = false;
+let LAUNCH_PIN;
+const LAUNCH_PIN_ID = 13;
+let CABINET_PINS = [];
+const CABINET_PIN_IDS = [2, 3, 4, 5];
 
 
 // Server
@@ -22,20 +25,20 @@ const port = 3000;
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get('/led/:mode', (req, res) => {
-    if (launcher) {
+    if (LAUNCH_PIN) {
         const status = "OK";
         switch (req.params.mode) {
             case "on":
-                launcher.on();
+                LAUNCH_PIN.on();
                 break;
             case "off":
-                launcher.off();
+                LAUNCH_PIN.off();
                 break;
             case "blink":
-                launcher.blink(30);
+                LAUNCH_PIN.blink(30);
                 break;
             case "stop":
-                launcher.stop();
+                LAUNCH_PIN.stop();
                 break;
             default:
                 let status = "Unknown: " + req.params.mode;
@@ -57,43 +60,53 @@ app.get('/initialize', (req, res) => {
         if (res.headersSent) return;
         res.status(500).send(`Board event '${eventName}': \n${e.message}`);
     }
-    board = new five.Board({
+    BOARD = new five.Board({
         port: process.env.ARDUINO_COM_PORT
     });
-    board.on('ready', () => {
+    BOARD.on('ready', () => {
+        BOARD_INITIALIZED = true;
         console.log('Board initialized.')
-        const ledPin = 13;
-        launcher = new five.Led(ledPin);
+        LAUNCH_PIN = new five.Led(LAUNCH_PIN_ID);
 
-        const pinIds = [2, 3, 4];
-        for (const id of pinIds) {
-            pins[id] = new five.Pin(id, {
+
+        for (const id of CABINET_PIN_IDS) {
+            CABINET_PINS[id] = new five.Pin(id, {
                 // mode: 0x0B
             });
-            board.pinMode(id, 0x0B);
-            pins[id].read((error, value) => {
+            BOARD.pinMode(id, 0x0B);
+            CABINET_PINS[id].read((error, value) => {
                 // console.log(`Pin ID ${id}: just read ${value}`);
             });
         }
     })
-    board.on('close', (e) => {
+    BOARD.on('close', (e) => {
         respondWithError(e, 'close')
     })
-    board.on('fail', (e) => {
+    BOARD.on('fail', (e) => {
         respondWithError(e, 'fail')
     })
-    board.on('exit', (e) => {
+    BOARD.on('exit', (e) => {
         respondWithError(e, 'exit')
     })
-    board.on('error', (e) => {
+    BOARD.on('error', (e) => {
         respondWithError(e, 'error')
     })
 })
 
 app.get('/status', (req, res) => {
+    if (!BOARD_INITIALIZED){
+        const response = CABINET_PIN_IDS.map((pinId) => {
+            return {
+                id: pinId,
+                reading: 0
+            }
+        })
+        res.send(response)
+        return;
+    }
     let promises = []
-    for (const id in pins) {
-        let pin = pins[id];
+    for (const id in CABINET_PINS) {
+        let pin = CABINET_PINS[id];
         let p = new Promise((resolve, reject) => {
             pin.query((state) => {
                 console.log(`Pin id: ${id}: ${JSON.stringify(state)}`)
@@ -109,8 +122,8 @@ app.get('/status', (req, res) => {
 })
 
 app.get('/launch', (req, res) => {
-    if (launcher) {
-        launcher.on();
+    if (LAUNCH_PIN) {
+        LAUNCH_PIN.on();
     }
     res.send('ok');
 });
