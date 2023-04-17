@@ -40,3 +40,4 @@ For full instructions and compatible boards see [johnny-five](https://github.com
 
 
 ## Improvements
+- Team names should not be set in main.js. Should be controlled in env or in a web initialization routine.
