@@ -20,6 +20,14 @@ As a result, if you are on a Windows machine, this needs to be run in Windows no
 
 `npm i`
 
+### Install the proper Arduino firmaware
+For full instructions and compatible boards see [johnny-five](https://github.com/rwaldron/johnny-five/wiki/Getting-Started)
+
+- Open Arduino IDE
+- Verify correct port and board
+- Navigate to File > Examples > Firmata > StandardFirmataPlus
+- Load sketch onto board.
+
 ### Run the server
 - Plugin in the Arduino
 - Find the Arudino COM port
