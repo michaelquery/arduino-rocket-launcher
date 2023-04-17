@@ -3,6 +3,23 @@ import * as axios from 'axios';
 
 const canvas = document.getElementById('target-canvas');
 
+const initialize = document.getElementById('initialize');
+
+initialize.addEventListener('click', (e) => {
+    axios.get('http://localhost:3000/initialize')
+        .then(response => {
+            console.log(response)
+            console.log('Board initialized')
+            e.target.disabled = true;
+            e.target.innerHTML = 'Board Initialized :)'
+        })
+        .catch(error => {
+            if (error.response){
+                alert(error.response.data)
+            }
+        })
+})
+
 const teams = [
     {
         pin: 2,

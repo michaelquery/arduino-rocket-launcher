@@ -6,28 +6,10 @@ const express = require('express');
 const cors = require('cors');
 
 // Johnny Five
-const board = new five.Board({
-    port: 'COM6'
-});
+let board;
 let launcher;
 let pins = [];
 
-board.on('ready', () => {
-    console.log('Board initialized.')
-    const ledPin = 13;
-    launcher = new five.Led(ledPin);
-
-    const pinIds = [2,3,4];
-    for (const id of pinIds) {
-        pins[id] = new five.Pin(id,{
-            // mode: 0x0B
-        });
-        board.pinMode(id, 0x0B);
-        pins[id].read((error, value) => {
-            // console.log(`Pin ID ${id}: just read ${value}`);
-        });
-    }
-})
 
 // Server
 app = express();
@@ -69,8 +51,45 @@ app.get('/diagram', (req, res) => {
     res.send(fs.readFileSync('./diagram.noml'));
 })
 
+app.get('/initialize', (req, res) => {
+    const respondWithError = (e, eventName) => {
+        if (res.headersSent) return;
+        res.status(500).send(`Board event '${eventName}': \n${e.message}`);
+    }
+    board = new five.Board({
+        port: 'COM6'
+    });
+    board.on('ready', () => {
+        console.log('Board initialized.')
+        const ledPin = 13;
+        launcher = new five.Led(ledPin);
 
-app.get('/status', (req,res)=>{
+        const pinIds = [2, 3, 4];
+        for (const id of pinIds) {
+            pins[id] = new five.Pin(id, {
+                // mode: 0x0B
+            });
+            board.pinMode(id, 0x0B);
+            pins[id].read((error, value) => {
+                // console.log(`Pin ID ${id}: just read ${value}`);
+            });
+        }
+    })
+    board.on('close', (e) => {
+        respondWithError(e, 'close')
+    })
+    board.on('fail', (e) => {
+        respondWithError(e, 'fail')
+    })
+    board.on('exit', (e) => {
+        respondWithError(e, 'exit')
+    })
+    board.on('error', (e) => {
+        respondWithError(e, 'error')
+    })
+})
+
+app.get('/status', (req, res) => {
     let promises = []
     for (const id in pins) {
         let pin = pins[id];
@@ -89,7 +108,7 @@ app.get('/status', (req,res)=>{
 })
 
 app.get('/launch', (req, res) => {
-    if(launcher){
+    if (launcher) {
         launcher.on();
     }
     res.send('ok');

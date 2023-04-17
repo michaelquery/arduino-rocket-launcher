@@ -22,7 +22,10 @@ module.exports = {
     },
     devtool: 'inline-source-map',
     devServer: {
-        static: './public',
+        static: {
+            directory: './public',
+        },
+        port: 8081,
         // hot: true,
     },
     plugins: [

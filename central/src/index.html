@@ -3,22 +3,31 @@
     <script src="//unpkg.com/graphre/dist/graphre.js"></script>
     <script src="//unpkg.com/nomnoml/dist/nomnoml.js"></script>
     <style>
-        body{
-            height:100%;
+        body {
+            height: 100%;
             width: 100%;
             background: #555555;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction:column;
         }
         #target-canvas{
-
+            display: flex;
+        }
+        footer {
+            display: flex;
+            justify-self: flex-end;
         }
     </style>
 </head>
 <body>
 <canvas id="target-canvas"></canvas>
+<footer>
+    <button id="initialize">Initialize Board</button>
+</footer>
 </body>
+
 </html>
 
 
