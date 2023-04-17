@@ -15,7 +15,7 @@ void setup() {
   //  (button) 
   //   o------------------|
   //   |                  W
-  //   |                  W (pull down resistor, 100 ohm)
+  //   |                  W (pull down resistor, 10k ohm)
   //   o (pin 5)          W
   //                      |
   //                      |
