@@ -3,7 +3,7 @@
 
 [<red> Controller|Waiting for Launch Codes]
 
-[<red>Team 1|Launch Codes Not Submitted] -> [Controller]
-[<red>Team 2|Launch Codes Not Submitted] -> [Controller]
-[<green>Team 3|Launch Codes Not Submitted] -> [Controller]
-[<green>Team 4|Launch Codes Not Submitted] -> [Controller]
+[<red>Fake Team 1|Launch Codes Not Submitted] -> [Controller]
+[<red>Fake Team 2|Launch Codes Not Submitted] -> [Controller]
+[<green>Fake Team 3|Launch Codes Not Submitted] -> [Controller]
+[<green>Fake Team 4|Launch Codes Not Submitted] -> [Controller]
