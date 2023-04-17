@@ -1,15 +1,19 @@
 # Paper Airplane Launcher
+
 ## Groups
 
 ## Make Airplane
+
 - https://www.youtube.com/watch?v=m2wSXaffzS0
 
 ## Steps
+
 - Setup Airplane (Jon)
     - Verify that releasing clasp will fire plane
     - Connect relay / linear actuator to clasp
 
 - Solder up the switch
+    - https://pasteboard.co/jNEoz4L7DuKe.jpg
     - Connect batteries
     - Connect to relay
     - Connect relay COM to linear actuator
