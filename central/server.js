@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+require('dotenv-defaults').config()
 
 const five = require('johnny-five');
 const express = require('express');
@@ -57,7 +58,7 @@ app.get('/initialize', (req, res) => {
         res.status(500).send(`Board event '${eventName}': \n${e.message}`);
     }
     board = new five.Board({
-        port: 'COM6'
+        port: process.env.ARDUINO_COM_PORT
     });
     board.on('ready', () => {
         console.log('Board initialized.')

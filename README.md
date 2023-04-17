@@ -32,4 +32,3 @@ As a result, if you are on a Windows machine, this needs to be run in Windows no
 
 
 ## Improvements
-- The Arduino COM port should be an environment varaible. Control with .env
